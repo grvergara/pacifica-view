@@ -14,6 +14,5 @@
     <form action="@routes.CharityController.donate()" method="post">
         <input type="hidden" name="id" value="@c.id"/>
         <input type="submit" value="This one!" />
-        @CSRF.formField
     </form>
 </div>
