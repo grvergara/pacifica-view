@@ -64,6 +64,7 @@ public class CharityController {
 
     @AddCSRFToken
     public CompletionStage<Result> index() {
+        System.out.println("endDateTime: " + this.endDateTime);
         return charityRepository.findList().thenApplyAsync(items ->
                 timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
     }
