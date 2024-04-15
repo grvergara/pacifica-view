@@ -9,7 +9,7 @@ version := "1.0-SNAPSHOT"
 
 lazy val `sf-xmas` = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
-scalaVersion := "2.12.13"
+scalaVersion := "2.12.16"
 
 libraryDependencies += guice
 libraryDependencies += jdbc
