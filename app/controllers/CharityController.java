@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static java.lang.Integer.parseInt;
-import static java.time.Instant.ofEpochMilli;
+import static java.time.Instant.ofEpochSecond;
 import static java.time.LocalDateTime.now;
 import static java.time.LocalDateTime.ofInstant;
 import static java.util.Optional.ofNullable;
@@ -53,9 +53,10 @@ public class CharityController {
         this.ec = ec;
         this.formFactory = formFactory;
         this.clock = clock;
-        long endTimeAsEpochMilli = config.getLong("charity.end-time");
+        long endTimeAsEpochSecond = config.getLong("charity.end-time");
+        System.out.println("endTimeAsEpochSecond: " + endTimeAsEpochSecond);
         String zonedIdAsString = config.getString("time.zone-id");
-        this.endDateTime = ofInstant(ofEpochMilli(endTimeAsEpochMilli), ZoneId.of(zonedIdAsString));
+        this.endDateTime = ofInstant(ofEpochSecond(endTimeAsEpochSecond), ZoneId.of(zonedIdAsString));
     }
 
     public Result redirectToIndex(){
