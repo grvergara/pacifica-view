@@ -4,13 +4,13 @@
 
 # An example controller showing a sample home page
 
-GET    /                           controllers.CharityController.index()
+GET    /sf                         controllers.CharityController.index()
 GET    /donate                     controllers.CharityController.redirectToIndex()
 POST   /donate                     controllers.CharityController.donate()
 GET    /closed                     controllers.ClosedController.index()
 GET    /donation-count             controllers.CharityController.donateCount()
 
-GET    /pacifica                   controllers.PacificaController.landing()
+GET    /                   controllers.PacificaController.landing()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
