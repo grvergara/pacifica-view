@@ -2,12 +2,12 @@ import play.ebean.sbt.PlayEbean
 import play.sbt.PlayJava
 import sbt.{TestFrameworks, Tests}
 
-name := """sf-xmas"""
-organization := "com.bynd"
+name := """pacifica"""
+organization := "cl.ro"
 
-version := "1.0-SNAPSHOT"
+version := "0.1"
 
-lazy val `sf-xmas` = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
+lazy val `pacifica` = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
 scalaVersion := "2.12.16"
 
