@@ -9,7 +9,7 @@ version := "0.1"
 
 lazy val `pacifica` = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
-scalaVersion := "2.12.16"
+scalaVersion := "2.13.14"
 
 libraryDependencies += guice
 libraryDependencies += jdbc
