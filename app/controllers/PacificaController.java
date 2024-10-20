@@ -2,7 +2,6 @@ package controllers;
 
 import com.typesafe.config.Config;
 import models.Charity;
-import org.jetbrains.annotations.NotNull;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -69,6 +68,10 @@ public class PacificaController {
 		return ok(views.html.pacificaIndex.render());
 	}
 
+    public Result alt() {
+        return ok(views.html.alt.render());
+    }
+
     @AddCSRFToken
     public CompletionStage<Result> index() {
         System.out.println("endDateTime: " + this.endDateTime);
@@ -108,7 +111,6 @@ public class PacificaController {
         return id;
     }
 
-    @NotNull
     private Function<Optional<Charity>, Result> mapCharityToResult(Function<Charity, Result> resultFromCharity) {
         return maybeCharity -> maybeCharity
                 .map(resultFromCharity)
