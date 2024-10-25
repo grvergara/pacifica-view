@@ -28,7 +28,7 @@ public class CharityRepository {
                                      EbeanDynamicEvolutions ebeanDynamicEvolutions /* Required for Ebean/DI bug */) {
         this.ebeanServer = getServer(ebeanConfig.defaultServer());
         this.executionContext = executionContext;
-    }
+     }
 
     private <T> CompletionStage<T> wrapContext(Supplier<T> toRun) {
         return supplyAsync(toRun, executionContext);
@@ -39,12 +39,12 @@ public class CharityRepository {
     }
 
     public CompletionStage<Optional<Charity>> findById(int id) {
-        return wrapContext(() -> ofNullable(ebeanServer.find(Charity.class).setId(id).findUnique()));
+        return wrapContext(() -> ofNullable(ebeanServer.find(Charity.class).setId(id).findOne()));
     }
 
     public CompletionStage<Optional<Charity>> vote(int id) {
         return wrapContext(() ->
-                ofNullable(ebeanServer.find(Charity.class).setId(id).findUnique()).map(c -> {
+                ofNullable(ebeanServer.find(Charity.class).setId(id).findOne()).map(c -> {
                     c.voteCount += 1;
                     c.update();
                     return c;

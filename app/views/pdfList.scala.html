@@ -1,0 +1,37 @@
+@(pdfs: List[models.PDF])
+@main("PDF Management", "pdf-list") { 
+<h1>Manage PDFs</h1>
+<form action="@routes.PDFController.uploadPDF()" method="post" enctype="multipart/form-data">
+<input type="text" name="title" placeholder="PDF Title" required />
+<textarea name="description" placeholder="Description"></textarea>
+<input type="file" name="pdfFile" accept="application/pdf" required />
+<button type="submit">Upload PDF</button>
+</form>
+<table>
+<thead>
+<tr>
+<th>Title</th>
+<th>Description</th>
+<th>Uploaded By</th>
+<th>Upload Date</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+@for(pdf <- pdfs) {
+<tr>
+<td>@pdf.getTitle()</td>
+<td>@pdf.getDescription()</td>
+<td>@pdf.getUploadedBy()</td>
+<td>@pdf.getUploadDate()</td>
+<td>
+<a href="@routes.PDFController.downloadPDF(pdf.getId())">Download</a>
+<form action="@routes.PDFController.deletePDF(pdf.getId())" method="post" style="display:inline;">
+<button type="submit">Delete</button>
+</form>
+</td>
+</tr>
+}
+</tbody>
+</table>
+}

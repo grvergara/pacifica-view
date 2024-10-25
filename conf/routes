@@ -14,5 +14,11 @@ GET    /                   controllers.PacificaController.landing()
 
 GET    /alt                        controllers.PacificaController.alt()
 
+GET    /pdf-list                   controllers.PDFController.pdfList()
+POST   /upload-pdf                 controllers.PDFController.uploadPDF(request: Request)
+GET    /pdf/:id                    controllers.PDFController.getPDF(id: Long)
+GET    /pdf/:id/download           controllers.PDFController.downloadPDF(id: Long)
+GET    /pdf/:id/delete             controllers.PDFController.deletePDF(id: Long)
+
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset) 

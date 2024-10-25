@@ -67,29 +67,35 @@ public class CharityController {
         System.out.println("endDateTime: " + this.endDateTime);
         return charityRepository.findList().thenApplyAsync(items ->
                 timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
-    }
+    } 
 
     @RequireCSRFCheck
     public CompletionStage<Result> donate() {
-
-        DynamicForm requestData = formFactory.form().bindFromRequest();
-
-        int id = getIdFrom(requestData);
-
-        if (id == 0) {
-            return completedFuture(badRequest());
-        }
-
-        return ofNullable(request().cookie("voted")) // Stop spam
-                .map(Cookie::value)
-                .map("true"::equals)
-                .map(ignored -> charityRepository.findById(id)
-                        .thenApplyAsync(mapCharityToResult(charity ->
-                                timeSensitiveResult(() -> vote.render(charity)))))
-                .orElseGet(() -> charityRepository.vote(id)
-                        .thenApplyAsync(mapCharityToResult(charity ->
-                                timeSensitiveResult(() -> vote.render(charity)).withCookies(createVotedCookie()))));
+        return charityRepository.findList().thenApplyAsync(items ->
+                timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
     }
+
+    //@RequireCSRFCheck
+    //public CompletionStage<Result> donate() {
+
+    //    DynamicForm requestData = formFactory.form().bindFromRequest();
+
+    //    int id = getIdFrom(requestData);
+
+    //    if (id == 0) {
+    //        return completedFuture(badRequest());
+    //    }
+
+    //    return ofNullable(request().cookie("voted")) // Stop spam
+    //            .map(Cookie::value)
+    //            .map("true"::equals)
+    //            .map(ignored -> charityRepository.findById(id)
+    //                    .thenApplyAsync(mapCharityToResult(charity ->
+    //                            timeSensitiveResult(() -> vote.render(charity)))))
+    //        .orElseGet(() -> charityRepository.vote(id)
+    //                    .thenApplyAsync(mapCharityToResult(charity ->
+    //                            timeSensitiveResult(() -> vote.render(charity)).withCookies(createVotedCookie()))));
+    //}
 
     private int getIdFrom(DynamicForm requestData) {
         int id = 0;

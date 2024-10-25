@@ -69,7 +69,7 @@ public class PacificaController {
 	}
 
     public Result alt() {
-        return ok(views.html.alt.render());
+        return ok(views.html.pacificaIndex.render());
     }
 
     @AddCSRFToken
