@@ -16,6 +16,7 @@ libraryDependencies += jdbc
 libraryDependencies += ws
 libraryDependencies += evolutions
 libraryDependencies += "com.h2database" % "h2" % "1.4.194"
+libraryDependencies += "org.postgresql" % "postgresql" % "42.2.18"
 
 libraryDependencies += "org.awaitility" % "awaitility" % "2.0.0" % Test
 libraryDependencies += "org.assertj" % "assertj-core" % "3.6.2" % Test
