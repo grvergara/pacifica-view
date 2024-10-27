@@ -1,0 +1,23 @@
+@(errorMessage: String)
+
+@main("User Login", "login") {
+    <div class="login-container">
+        <h1>Login</h1>
+        @if(errorMessage != null) {
+            <p class="error">@errorMessage</p>
+        }
+        <form action="@routes.LoginController.login()" method="POST">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login" />
+            </div>
+        </form>
+    </div>
+}

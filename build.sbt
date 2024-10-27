@@ -23,6 +23,7 @@ libraryDependencies += "org.assertj" % "assertj-core" % "3.6.2" % Test
 libraryDependencies += "org.mockito" % "mockito-core" % "2.1.0" % Test
 libraryDependencies += javaJdbc % Test
 libraryDependencies += scalaOrganization.value % "scala-compiler" % scalaVersion.value
+libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
 
 testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
 

@@ -4,7 +4,10 @@ import play.db.Database;
 import play.mvc.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import models.Secured;
 import play.libs.Json;
+import play.mvc.Security;
 
 import javax.inject.Inject;
 
@@ -12,7 +15,6 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 public class HealthController extends Controller {
 
     private final Database db;
@@ -22,6 +24,7 @@ public class HealthController extends Controller {
         this.db = db;
     }
 
+    @Security.Authenticated(Secured.class)
     public Result checkDatabaseConnection() {
         
         ObjectNode result = Json.newObject();
@@ -47,7 +50,8 @@ public class HealthController extends Controller {
         }
     }
 
-        public Result checkHealth() {
+    @Security.Authenticated(Secured.class)
+    public Result checkHealth() {
         ObjectNode result = Json.newObject();
         ObjectNode dbStatus = Json.newObject();
         ObjectNode systemStatus = Json.newObject();
