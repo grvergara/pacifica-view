@@ -29,9 +29,9 @@ public class LoginController extends Controller {
         String username = request.body().asFormUrlEncoded().get("username")[0];
         String password = request.body().asFormUrlEncoded().get("password")[0];
 
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
+        User userOpt = userRepository.findByUsername(username);
+        if (userOpt != null ) {
+            User user = userOpt;
             if (BCrypt.checkpw(password, user.getPasswordHash())) {
                 // Password matches, set session
                 return redirect(routes.CharityController.index())

@@ -1,29 +1,28 @@
 package repository;
 
-import io.ebean.EbeanServer;
 import models.User;
-import javax.inject.Inject;
-import javax.inject.Singleton;
-import java.util.Optional;
+import io.ebean.Ebean;
+import java.util.List;
 
-@Singleton
 public class UserRepository {
 
-    private final EbeanServer ebeanServer;
-
-    @Inject
-    public UserRepository(EbeanServer ebeanServer) {
-        this.ebeanServer = ebeanServer;
+    public List<User> findAll() {
+        return Ebean.find(User.class).findList();
     }
 
-    public Optional<User> findByUsername(String username) {
-        return Optional.ofNullable(ebeanServer.find(User.class)
-                .where()
-                .eq("username", username)
-                .findOne());
+    public User findById(Long id) {
+        return Ebean.find(User.class, id);
+    }
+
+    public User findByUsername(String username) {
+        return Ebean.find(User.class, username);
     }
 
     public void save(User user) {
-        ebeanServer.save(user);
+        Ebean.save(user);
+    }
+
+    public void delete(User user) {
+        Ebean.delete(user);
     }
 }

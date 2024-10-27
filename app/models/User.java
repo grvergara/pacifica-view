@@ -1,6 +1,5 @@
 package models;
 
-import io.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,7 +7,7 @@ import javax.persistence.Column;
 
 @Entity
 @Table(name="users")
-public class User extends Model {
+public class User {
 
     @Id
     private Long id;

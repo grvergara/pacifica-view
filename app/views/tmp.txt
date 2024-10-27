@@ -1,0 +1,27 @@
+            <nav>
+                <ul>
+                    @if(request.username.isDefined) {
+                        <li>Welcome, @request.username</li>
+                        <li><a href="@routes.LoginController.logout()">Logout</a></li>
+                    } else {
+                        <li><a href="@routes.LoginController.showLoginForm()">Login</a></li>
+                    }
+                </ul>
+            </nav>
+
+
+
+            @if(request.userInfo.isEmpty) {
+                @helper.form(routes.LoginController.login) {
+                    @helper.CSRF.formField
+                    @helper.inputText(form("username"))
+                    <input type="submit"/>
+                }
+            }
+        
+            @if(request.userInfo.isDefined) {
+                <form action="@routes.LogoutController.logout" method="post">
+                    @helper.CSRF.formField
+                    <input type="submit" value="logout">
+                </form>
+            }
