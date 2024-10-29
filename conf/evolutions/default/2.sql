@@ -6,4 +6,4 @@ insert into charity (id, name, short_name, url, description, image, image_alt, v
 
 # --- !Downs
 
-delete from charity;
+--delete from charity;
