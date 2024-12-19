@@ -358,7 +358,7 @@ main.show {
     opacity: 1; }
 
 footer a {
-  background: url("../i/mobile/beyond_logo_white-mobile-end.png") no-repeat top left;
+  /*background: url("../i/mobile/beyond_logo_white-mobile-end.png") no-repeat top left;*/
   text-indent: -1000px;
   overflow: hidden;
   width: 106px;
@@ -372,7 +372,7 @@ footer img {
   display: none; }
 
 .lights-on-loader {
-  background: url("../i/desktop/BridgeOn.png") no-repeat top left;
+  /*background: url("../i/desktop/BridgeOn.png") no-repeat top left;*/
   clip: rect(1px, 1px, 1px, 1px);
   width: 1px;
   height: 1px;
@@ -443,7 +443,7 @@ header:before {
     overflow: hidden;
     border: none;
     cursor: pointer;
-    background: url("../i/desktop/close-red.png") no-repeat top right; }
+    /*background: url("../i/desktop/close-red.png") no-repeat top right;*/ }
   .modal .content {
     overflow-y: scroll;
     height: 100%;
@@ -506,7 +506,7 @@ header:before {
   background: radial-gradient(ellipse closest-side, #96cADD, #54A7C7 20%, transparent); }
 
 body.votepage {
-  background-image: url("../i/desktop/BridgeOn.png"); }
+  /*background-image: url("../i/desktop/BridgeOn.png");*/ }
 
 .votepage p {
   margin: 1em; }
@@ -526,7 +526,7 @@ body.votepage {
 
 .votepage main a {
   display: block;
-  background: url("../i/mobile/beyond_logo_white-mobile-end.png") no-repeat top left;
+  /*background: url("../i/mobile/beyond_logo_white-mobile-end.png") no-repeat top left;*/
   text-indent: -1000px;
   overflow: hidden;
   width: 106px;
@@ -614,7 +614,7 @@ body.votepage {
     font-size: 3.4rem;
     margin: 50px 0; }
   .votepage main a {
-    background: url("../i/desktop/beyond_logo_white_end.png") no-repeat top left;
+    /*background: url("../i/desktop/beyond_logo_white_end.png") no-repeat top left;*/
     width: 145px;
     height: 40px; }
   .votepage footer a {
@@ -638,7 +638,7 @@ body.votepage {
     top: -143.5px; }
   header:after {
     content: "";
-    background: url("../i/desktop/moon.png") no-repeat top left;
+    /*background: url("../i/desktop/moon.png") no-repeat top left;*/
     position: absolute;
     width: 137px;
     height: 137px;
