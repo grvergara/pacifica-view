@@ -29,21 +29,8 @@
         @content
         <footer>
             <img src="@routes.Assets.versioned("i/desktop/BridgeOff.png")" alt="Graphic of the San Francisco Skyline" />
-            <a href="https://ro.cl" target="_blank">Ro</a>
         </footer>
 
-        <script src="@routes.Assets.versioned("js/app.min.js")" type="text/javascript"></script>
-
-        @request.flash.data.map{ case (k, v) =>
-            <p>
-                @k: @v
-            </p>
-            }
-        
-            <p>
-              Username is @{request}
-            </p>
-        
-
+        <script src="@routes.Assets.versioned("js/pacifica.js")" type="text/javascript"></script>       
     </body>
 </html>

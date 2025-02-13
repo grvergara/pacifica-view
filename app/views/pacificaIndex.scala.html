@@ -1,16 +1,23 @@
 
-@alt("Happy View on Pacifica", "homepage") {
-    <div class="main">
-        <div class="header">
-            <p>What <span>is Love ?</span></p>
+@main("::Pacifica::", "homepage") {
+    <div class="container">
+        <div class="item item1"><p>What <span>is Love ?</span></p></div>
+        <div class="item item2">
+            @request.flash.data.map{ case (k, v) =>
+                <li><span>@k</span>:<span>@v</span></li>
+            }
         </div>
-        <div id="canvas">Not initialized yet  \../</div>
-        <div id="canvas">Work in progress</div>
-        <div class="links">
-            <h3>Available Routes:</h3>
-            <ul>
-                <li><a href="@routes.HealthController.checkDatabaseConnection()">Check Database Health</a></li>
-            </ul>
+        <div class="item item3"></div>
+        <div class="item item4"></div>
+        <div class="item item5"></div>
+        <div class="item item6"></div>
+        <div class="item item7"></div>
+        <div class="item item8"></div>
+        <div class="item item9"></div>
+        <div class="item item10"></div>
+        <div class="item item11"></div>
+        <div class="item item12">
+            <span><a href="@routes.HealthController.checkDatabaseConnection()">Check Database Health</a></span>
         </div>
     </div>
 }
