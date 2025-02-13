@@ -17,7 +17,14 @@
     </head>
     <body class="@pageType">
         <header>
-
+            <nav class="top-nav">
+                @if(request.session().get("username") != null ) {
+                    <span class="welcome">Welcome, @request.session().get("username")</span>
+                    <a href="@routes.LoginController.logout()" class="logout-btn">Logout</a>
+                } else {
+                    <a href="@routes.LoginController.showLoginForm()" class="login-btn">Login</a>
+                }
+            </nav>
         </header>
         @content
         <footer>
