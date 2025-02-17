@@ -36,9 +36,9 @@ create table users (
 
 # --- !Downs
 
--- drop table if exists charity cascade;
+drop table if exists charity cascade;
 
--- drop table if exists pdf cascade;
+drop table if exists pdf cascade;
 
---drop table if exists users cascade;
+drop table if exists users cascade;
 

@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     grid-gap: 1rem;
 }
 
@@ -9,4 +9,19 @@
     background-color: #afc7fc;
     padding: 10px;
 }
+
+.landing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-gap: 1rem;
+}
+
+.landing .item {
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+
+
 

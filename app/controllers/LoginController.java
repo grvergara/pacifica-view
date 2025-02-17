@@ -8,14 +8,16 @@ import models.User;
 import javax.inject.Inject;
 import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
-
+import play.data.FormFactory;
 
 public class LoginController extends Controller {
 
+    private final FormFactory formFactory;
     private final UserRepository userRepository;
 
     @Inject
-    public LoginController(UserRepository userRepository) {
+    public LoginController(FormFactory formFactory, UserRepository userRepository) {
+        this.formFactory = formFactory;
         this.userRepository = userRepository;
     }
 
@@ -26,21 +28,21 @@ public class LoginController extends Controller {
 
     // Handle login submission
     public Result login(Http.Request request) {
+        // Get form data
         String username = request.body().asFormUrlEncoded().get("username")[0];
         String password = request.body().asFormUrlEncoded().get("password")[0];
 
-        User userOpt = userRepository.findByUsername(username);
-        if (userOpt != null ) {
-            User user = userOpt;
-            if (BCrypt.checkpw(password, user.getPasswordHash())) {
-                // Password matches, set session
-                return redirect(routes.CharityController.index())
-                        .addingToSession(request, "username", user.getUsername());
-            }
+        // Find user
+        User user = userRepository.findByUsername(username);
+        
+        if (user != null && BCrypt.checkpw(password, user.getPasswordHash())) {
+            // Login successful - create session
+            return redirect(routes.PacificaController.landing())
+                   .addingToSession(request, "username", username);
+        } else {
+            // Login failed
+            return badRequest(views.html.login.render("Invalid username or password"));
         }
-
-        // Authentication failed
-        return badRequest(views.html.login.render("Invalid username or password"));
     }
 
     // Handle logout

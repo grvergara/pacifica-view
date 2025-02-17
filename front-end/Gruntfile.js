@@ -16,15 +16,17 @@ module.exports = function (grunt) {
 	];
 
 	var outFolder = "../public/";
-
+	var sass = require('node-sass');
+	
 	// Project configuration.
 	grunt.initConfig({
 		pkg: '<json:package.json>',
 
 		sass: {
 			options: {
-				debugInfo: false,
-				trace: false
+				debugInfo: true,
+				trace: false,
+				implementation: sass
 			},
 			store: {
 				files: {

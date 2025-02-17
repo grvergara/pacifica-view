@@ -14,7 +14,10 @@ import play.twirl.api.Html;
 import repository.CharityRepository;
 import views.html.vote;
 import views.html.voteIndex;
-import views.html.pacificaIndex;
+import views.html.pacifica;
+import play.mvc.Controller;
+import play.mvc.Security;
+import auth.Secured;
 
 import javax.inject.Inject;
 import java.time.Clock;
@@ -35,7 +38,11 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 import static play.mvc.Http.Context.Implicit.request;
 import static play.mvc.Results.*;
 
-public class PacificaController {
+import actors.Actors;
+import actors.ClientConnection;
+import com.fasterxml.jackson.databind.JsonNode;
+
+public class PacificaController extends Controller {
 
     private final CharityRepository charityRepository;
     private final HttpExecutionContext ec;
@@ -65,11 +72,11 @@ public class PacificaController {
 	
 	@AddCSRFToken
 	public Result landing() {
-		return ok(views.html.pacificaIndex.render());
+		return ok(views.html.pacifica.render());
 	}
 
     public Result alt() {
-        return ok(views.html.pacificaIndex.render());
+        return ok(views.html.pacifica.render());
     }
 
     @AddCSRFToken
@@ -143,4 +150,11 @@ public class PacificaController {
     private boolean isAfterEndDateTime() {
         return endDateTime.isBefore(now(clock));
     }
+
+      /**
+   * The WebSocket
+   */
+  public  play.mvc.WebSocket stream(String email) {
+    return WebSocket.withActor(upstream -> ClientConnection.props(email, upstream, Actors.regionManagerClient()));
+}
 }

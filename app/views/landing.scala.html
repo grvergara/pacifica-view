@@ -1,0 +1,24 @@
+
+@alt("::Pacifica::", "homepage", "2025") {
+    <div class="landing">
+        <div class="item item1">
+            <span>
+            @if(request.session().get("username") != null ) {
+                <span class="welcome">Welcome, @request.session().get("username")</span>
+                <a href="@routes.LoginController.logout()" class="logout-btn">Logout</a>
+            } else {
+                <a href="@routes.LoginController.showLoginForm()" class="login-btn">Login</a>
+            }
+            </span>
+        </div>
+        <div class="item item2">
+            <span><a href="@routes.HealthController.checkDatabaseConnection()">Check Database Health</a></span>
+        </div>
+        <div class="item item3">
+            @request.flash.data.map{ case (k, v) =>
+                <li><span>@k</span>:<span>@v</span></li>
+            }
+        </div>
+
+    </div>
+}

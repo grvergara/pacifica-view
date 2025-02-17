@@ -4,7 +4,7 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
-@(title: String, pageType: String)(content: Html)
+@(title: String, pageType: String, year: String)(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,8 @@
         <header></header>
         @content
         <footer>
-            <a href="#" target="_blank">2021-2024</a>
+            <img src="@routes.Assets.versioned("i/desktop/BridgeOff.png")" alt="Graphic of the San Francisco Skyline" />
+            <a href="#" target="_blank">&reg;@year</a>
         </footer>
     </body>
 </html>
