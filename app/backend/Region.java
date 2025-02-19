@@ -1,8 +1,9 @@
 package backend;
 
 import akka.actor.*;
-import akka.contrib.pattern.DistributedPubSubExtension;
-import akka.contrib.pattern.DistributedPubSubMediator.Publish;
+import akka.cluster.pubsub.DistributedPubSub;
+import akka.cluster.pubsub.DistributedPubSubMediator;
+import akka.cluster.pubsub.DistributedPubSubMediator.Publish;
 import scala.concurrent.duration.Deadline;
 import models.backend.*;
 import models.backend.PointOfInterest.*;
@@ -26,7 +27,7 @@ public class Region extends UntypedActor {
 
     private static final Object TICK = new Object();
 
-    private final ActorRef mediator = DistributedPubSubExtension.get(getContext().system()).mediator();
+    private final ActorRef mediator = DistributedPubSub.get(getContext().system()).mediator();
     private final SettingsImpl settings = Settings.SettingsProvider.get(getContext().system());
 
     private final RegionId regionId;

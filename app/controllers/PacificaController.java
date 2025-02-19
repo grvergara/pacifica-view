@@ -20,6 +20,7 @@ import play.mvc.Security;
 import auth.Secured;
 
 import javax.inject.Inject;
+
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -38,8 +39,14 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 import static play.mvc.Http.Context.Implicit.request;
 import static play.mvc.Results.*;
 
+import play.mvc.*;
+import play.libs.streams.ActorFlow;
+import akka.actor.*;
+
 import actors.Actors;
 import actors.ClientConnection;
+import akka.actor.ActorRef;
+import akka.stream.Materializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class PacificaController extends Controller {
@@ -49,13 +56,17 @@ public class PacificaController extends Controller {
     private final FormFactory formFactory;
     private final LocalDateTime endDateTime;
     private final Clock clock;
+    private final ActorSystem actorSystem;
+    private final Actors actors;
+    private final Materializer materializer;
 
     @Inject
     public PacificaController(CharityRepository charityRepository,
                              HttpExecutionContext ec,
                              FormFactory formFactory,
                              Clock clock,
-                             Config config) {
+                             Config config,
+                             ActorSystem actorSystem, Actors actors, Materializer materializer) {
         this.charityRepository = charityRepository;
         this.ec = ec;
         this.formFactory = formFactory;
@@ -64,6 +75,9 @@ public class PacificaController extends Controller {
         System.out.println("endTimeAsEpochSecond: " + endTimeAsEpochSecond);
         String zonedIdAsString = config.getString("time.zone-id");
         this.endDateTime = ofInstant(ofEpochSecond(endTimeAsEpochSecond), ZoneId.of(zonedIdAsString));
+        this.actorSystem = actorSystem;
+        this.actors = actors;
+        this.materializer = materializer;
     }
 
     public Result redirectToIndex(){
@@ -155,6 +169,10 @@ public class PacificaController extends Controller {
    * The WebSocket
    */
   public  play.mvc.WebSocket stream(String email) {
-    return WebSocket.withActor(upstream -> ClientConnection.props(email, upstream, Actors.regionManagerClient()));
-}
+        ActorRef rmc = actors.getRegionManagerClient();
+        return WebSocket.Text.accept( 
+            request -> 
+                ActorFlow.actorRef(out -> ClientConnection.props(email, out, rmc),actorSystem,materializer)
+        );    
+    }
 }

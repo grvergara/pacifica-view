@@ -9,8 +9,8 @@ version := "0.1"
 
 lazy val `pacifica` = (project in file(".")).enablePlugins(PlayJava, PlayEbean, SbtWeb)
 
-//scalaVersion := "2.13.16"                                                                                                                                                                                                 
-scalaVersion := "2.12.20" // For Akka 2.5.30
+scalaVersion := "2.13.16"                                                                                                                                                                                                 
+//scalaVersion := "2.12.20" // For Akka 2.5.30
 
 libraryDependencies += guice
 libraryDependencies += jdbc
@@ -18,8 +18,17 @@ libraryDependencies += ws
 libraryDependencies += evolutions
 libraryDependencies += "com.h2database" % "h2" % "1.4.194"
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.18"
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.20"
-libraryDependencies += "com.typesafe.akka" %% "akka-contrib" % "2.4.20"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.31"
+libraryDependencies += "com.typesafe.akka" %% "akka-cluster" % "2.5.31"
+libraryDependencies += "com.typesafe.akka" %% "akka-cluster-tools" % "2.5.31"
+libraryDependencies += "com.typesafe.akka" %% "akka-contrib" % "2.5.31"
+libraryDependencies += "com.typesafe.akka" %% "akka-persistence" % "2.5.31"
+
+//[warn] a.u.ManifestInfo - Detected possible incompatible versions on the classpath. 
+//Please note that a given Akka version MUST be the same across all modules of Akka that you are using, 
+//e.g. if you use [2.5.31] all other modules that are released together MUST be of the same version. Make sure you're using a compatible set of libraries.
+//Possibly conflicting versions [2.5.23, 2.5.31] in libraries [akka-persistence:2.5.23, akka-actor:2.5.31, akka-slf4j:2.5.31, akka-cluster:2.5.23, akka-cluster-tools:2.5.23, akka-protobuf:2.5.31, akka-coordination:2.5.23, akka-remote:2.5.23, akka-stream:2.5.31]
+
 
 libraryDependencies += "org.awaitility" % "awaitility" % "2.0.0" % Test
 libraryDependencies += "org.assertj" % "assertj-core" % "3.6.2" % Test
