@@ -33,4 +33,4 @@ POST    /login                      controllers.LoginController.login(request: R
 GET     /logout                     controllers.LoginController.logout(request: Request)
 
 # The websocket
-GET        /stream/:email       controllers.PacificaController.stream(email)
+# GET        /stream/:email       controllers.PacificaController.stream(email)

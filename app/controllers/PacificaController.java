@@ -57,7 +57,7 @@ public class PacificaController extends Controller {
     private final LocalDateTime endDateTime;
     private final Clock clock;
     private final ActorSystem actorSystem;
-    private final Actors actors;
+    //private final Actors actors;
     private final Materializer materializer;
 
     @Inject
@@ -66,7 +66,9 @@ public class PacificaController extends Controller {
                              FormFactory formFactory,
                              Clock clock,
                              Config config,
-                             ActorSystem actorSystem, Actors actors, Materializer materializer) {
+                             ActorSystem actorSystem,
+                             //Actors actors,
+                             Materializer materializer) {
         this.charityRepository = charityRepository;
         this.ec = ec;
         this.formFactory = formFactory;
@@ -76,7 +78,7 @@ public class PacificaController extends Controller {
         String zonedIdAsString = config.getString("time.zone-id");
         this.endDateTime = ofInstant(ofEpochSecond(endTimeAsEpochSecond), ZoneId.of(zonedIdAsString));
         this.actorSystem = actorSystem;
-        this.actors = actors;
+        //this.actors = actors;
         this.materializer = materializer;
     }
 
@@ -168,11 +170,11 @@ public class PacificaController extends Controller {
       /**
    * The WebSocket
    */
-  public  play.mvc.WebSocket stream(String email) {
+  /* public  play.mvc.WebSocket stream(String email) {
         ActorRef rmc = actors.getRegionManagerClient();
         return WebSocket.Text.accept( 
             request -> 
                 ActorFlow.actorRef(out -> ClientConnection.props(email, out, rmc),actorSystem,materializer)
         );    
-    }
+    } */
 }
