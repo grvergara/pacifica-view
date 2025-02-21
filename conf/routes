@@ -10,7 +10,8 @@ POST   /donate                     controllers.CharityController.donate()
 GET    /closed                     controllers.ClosedController.index()
 GET    /donation-count             controllers.CharityController.donateCount()
 
-GET    /                   controllers.PacificaController.landing()
+GET    /landing                   controllers.PacificaController.landing()
+GET    /                           controllers.FooController.index()
 
 GET    /alt                        controllers.PacificaController.alt()
 
