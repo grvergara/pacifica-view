@@ -46,6 +46,9 @@ libraryDependencies += "org.webjars" % "knockout" % "2.3.0"
 libraryDependencies += "org.webjars" % "requirejs" % "2.1.11-1"
 libraryDependencies += "org.webjars" % "rjs" % "2.1.11-1-trireme" % "test"
 libraryDependencies += "org.webjars" % "squirejs" % "0.1.0" % "test"
+libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.3"
+libraryDependencies += "org.webjars" % "flot" % "0.8.3"
+
 
 testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
 
