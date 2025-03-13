@@ -39,11 +39,11 @@ require ["knockout", "mainPage", "bootstrap"], (ko, MainPageModel) ->
 
 class HelloWorld
     constructor: (@message)->
-        console.log("Bofh says: #{@message}")
+      @message = "Bofh says: #{@message}"
     
     sayHello: ->
-        console.log("Ok")
+        console.log(@message)
 
 $(document).ready ->
-    hello = new HelloWorld("Hello, World! Don't forget to drink water and coffee.")
+    hello = new HelloWorld("Hello, World! Enjoy your coffee. :)")
     hello.sayHello()
