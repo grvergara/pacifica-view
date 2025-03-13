@@ -1,7 +1,6 @@
-# SF XMAS
+# Pacifica
 
-This application is based on PlayFramework and uses an in memory database H2 in order to receive donation pledges for a 
-specific charity.
+This application is based on PlayFramework and uses a relational database to store multiple JPA models.
 
 ## Getting Started
 
@@ -122,3 +121,9 @@ When deploying to production:
 [Play Framework](https://www.playframework.com/)
 
 [Docker](https://www.docker.com/)
+
+## TODO
+UPDATE this README
+Make a ROADMAP
+Replace KnockoutJS with EmberJs.
+
