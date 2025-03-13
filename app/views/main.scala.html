@@ -22,7 +22,7 @@
                     <span class="welcome">Welcome, @request.session().get("username")</span>
                     <a href="@routes.LoginController.logout()" class="logout-btn">Logout</a>
                 } else {
-                    <a href="@routes.LoginController.showLoginForm()" class="login-btn">Login</a>
+                    <a id="hello-btn" class="login-btn" href="@routes.LoginController.showLoginForm()">Hello</a>
                 }
             </nav>
         </header>
@@ -31,11 +31,13 @@
         
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap.css")"/>
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("lib/bootstrap/css/bootstrap-theme.css")"/>
+
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")"/>
         <link rel="stylesheet" href="@routes.Assets.versioned("lib/leaflet/leaflet.css")" />
 
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
 
+        <script src="@routes.Assets.versioned("lib/jquery/jquery.js")"></script>
         <script data-main="@routes.Assets.versioned("javascripts/main.js")" type="text/javascript" src="@routes.Assets.versioned("lib/requirejs/require.js")"></script>
     </body>
 </html>
