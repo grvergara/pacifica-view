@@ -18,6 +18,7 @@ libraryDependencies += ws
 libraryDependencies += evolutions
 libraryDependencies += "com.h2database" % "h2" % "1.4.194"
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.18"
+libraryDependencies += "com.typesafe.play" %% "play-jdbc" % "2.7.9"
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.31"
 libraryDependencies += "com.typesafe.akka" %% "akka-cluster" % "2.5.31"
 libraryDependencies += "com.typesafe.akka" %% "akka-cluster-tools" % "2.5.31"
@@ -40,7 +41,7 @@ libraryDependencies += "de.grundid.opendatalab" % "geojson-jackson" % "1.1"
 
 libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
 libraryDependencies += "org.webjars" % "jquery" % "3.7.1"
-libraryDependencies += "org.webjars" % "bootstrap" % "3.0.0"
+libraryDependencies += "org.webjars" % "bootstrap" % "3.4.1"
 libraryDependencies += "org.webjars" % "leaflet" % "1.7.1"
 libraryDependencies += "org.webjars" % "knockout" % "2.3.0"
 libraryDependencies += "org.webjars" % "requirejs" % "2.1.11-1"
