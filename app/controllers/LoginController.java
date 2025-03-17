@@ -37,7 +37,7 @@ public class LoginController extends Controller {
         
         if (user != null && BCrypt.checkpw(password, user.getPasswordHash())) {
             // Login successful - create session
-            return redirect(routes.PacificaController.landing())
+            return redirect(routes.PacificaController.index())
                    .addingToSession(request, "username", username);
         } else {
             // Login failed

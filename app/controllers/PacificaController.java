@@ -8,6 +8,7 @@ import akka.japi.pf.PFBuilder;
 import akka.stream.javadsl.*;
 import com.typesafe.config.Config;
 import models.Charity;
+import modules.CounterModule;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -21,7 +22,6 @@ import play.twirl.api.Html;
 import repository.CharityRepository;
 import views.html.vote;
 import views.html.voteIndex;
-import views.html.pacifica;
 import play.mvc.Controller;
 import play.mvc.Security;
 import auth.Secured;
@@ -61,6 +61,7 @@ import akka.actor.ActorRef;
 import akka.event.LoggingAdapter;
 import akka.stream.Materializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import modules.CounterModule.Counter;
 
 public class PacificaController extends Controller {
 
@@ -73,6 +74,7 @@ public class PacificaController extends Controller {
     //private final Actors actors;
     private final Materializer materializer;
     private final Flow<String, String, NotUsed> userFlow;
+    private final Counter counter;
 
     @Inject
     public PacificaController(CharityRepository charityRepository,
@@ -83,7 +85,8 @@ public class PacificaController extends Controller {
                              ActorSystem actorSystem,
                               Materializer mat,
                              //Actors actors,
-                             Materializer materializer) {
+                             Materializer materializer,
+                              Counter counter) {
         org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
         LoggingAdapter logging = Logging.getLogger(actorSystem.eventStream(), logger.getName());
 
@@ -109,31 +112,30 @@ public class PacificaController extends Controller {
         Sink<String, NotUsed> chatSink = sinkSourcePair.first();
         Source<String, NotUsed> chatSource = sinkSourcePair.second();
         this.userFlow = Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow", logging);
+        this.counter = counter;
 
     }
 
     public Result redirectToIndex(){
         return redirect(routes.CharityController.index());
     }
-	
-	@AddCSRFToken
-	public Result landing() {
-		return ok(views.html.pacifica.render());
-	}
 
-    public Result alt() {
-        return ok(views.html.pacifica.render());
-    }
+	@AddCSRFToken
+	public Result monitor() {
+		return ok(views.html.monitor.render());
+	}
 
     public Result robots() { return ok(views.txt.robots.render()); }
 
     public Result sitemap() { return ok(views.xml.sitemap.render("www.example.org")); }
 
     @AddCSRFToken
-    public CompletionStage<Result> index() {
-        System.out.println("endDateTime: " + this.endDateTime);
-        return charityRepository.findList().thenApplyAsync(items ->
-                timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
+    public Result index() {
+        //System.out.println("endDateTime: " + this.endDateTime);
+        //return charityRepository.findList().thenApplyAsync(items ->
+        //        timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
+        Long count = counter.getNextValue();
+        return ok(views.html.foo.render(count));
     }
 
     @RequireCSRFCheck

@@ -10,10 +10,8 @@ POST   /donate                     controllers.CharityController.donate()
 GET    /closed                     controllers.ClosedController.index()
 GET    /donation-count             controllers.CharityController.donateCount()
 
-GET    /landing                   controllers.PacificaController.landing()
-GET    /                           controllers.FooController.index()
-
-GET    /alt                        controllers.PacificaController.alt()
+GET    /monitor                   controllers.PacificaController.monitor()
+GET    /                           controllers.PacificaController.index()
 
 GET    /pdf-list                   controllers.PDFController.pdfList()
 POST   /upload-pdf                 controllers.PDFController.uploadPDF(request: Request)
@@ -31,7 +29,7 @@ POST    /login                      controllers.LoginController.login(request: R
 GET     /logout                     controllers.LoginController.logout(request: Request)
 
 # The websocket
-GET        /stream/:email       controllers.PacificaController.stream(email)
+GET     /stream/:email       controllers.PacificaController.stream(email)
 
 # Xat Routes
 # This file defines all application routes (Higher priority routes first)
