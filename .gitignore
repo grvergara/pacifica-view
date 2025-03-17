@@ -20,3 +20,4 @@ bin
 activator-sbt-*-shim.sbt
 front-end/mode_modules
 front-end/build
+play-samples-2.7.x
