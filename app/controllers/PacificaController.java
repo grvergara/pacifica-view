@@ -1,5 +1,11 @@
 package controllers;
 
+import akka.NotUsed;
+import akka.event.Logging;
+import akka.event.LoggingAdapter;
+import akka.japi.Pair;
+import akka.japi.pf.PFBuilder;
+import akka.stream.javadsl.*;
 import com.typesafe.config.Config;
 import models.Charity;
 import play.Logger;
@@ -7,6 +13,7 @@ import play.data.DynamicForm;
 import play.data.FormFactory;
 import play.filters.csrf.AddCSRFToken;
 import play.filters.csrf.RequireCSRFCheck;
+import play.libs.F;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http.Cookie;
 import play.mvc.Result;
@@ -21,11 +28,14 @@ import auth.Secured;
 
 import javax.inject.Inject;
 
+import java.net.URI;
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -42,10 +52,13 @@ import static play.mvc.Results.*;
 import play.mvc.*;
 import play.libs.streams.ActorFlow;
 import akka.actor.*;
+import akka.stream.Materializer;
+
 
 import actors.Actors;
 import actors.ClientConnection;
 import akka.actor.ActorRef;
+import akka.event.LoggingAdapter;
 import akka.stream.Materializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -59,6 +72,7 @@ public class PacificaController extends Controller {
     private final ActorSystem actorSystem;
     //private final Actors actors;
     private final Materializer materializer;
+    private final Flow<String, String, NotUsed> userFlow;
 
     @Inject
     public PacificaController(CharityRepository charityRepository,
@@ -67,8 +81,12 @@ public class PacificaController extends Controller {
                              Clock clock,
                              Config config,
                              ActorSystem actorSystem,
+                              Materializer mat,
                              //Actors actors,
                              Materializer materializer) {
+        org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
+        LoggingAdapter logging = Logging.getLogger(actorSystem.eventStream(), logger.getName());
+
         this.charityRepository = charityRepository;
         this.ec = ec;
         this.formFactory = formFactory;
@@ -80,6 +98,18 @@ public class PacificaController extends Controller {
         this.actorSystem = actorSystem;
         //this.actors = actors;
         this.materializer = materializer;
+
+        //noinspection unchecked
+        Source<String, Sink<String, NotUsed>> source = MergeHub.of(String.class)
+                .log("source", logging)
+                .recoverWithRetries(-1, new PFBuilder().match(Throwable.class, e -> Source.empty()).build());
+        Sink<String, Source<String, NotUsed>> sink = BroadcastHub.of(String.class);
+
+        Pair<Sink<String, NotUsed>, Source<String, NotUsed>> sinkSourcePair = source.toMat(sink, Keep.both()).run(mat);
+        Sink<String, NotUsed> chatSink = sinkSourcePair.first();
+        Source<String, NotUsed> chatSource = sinkSourcePair.second();
+        this.userFlow = Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow", logging);
+
     }
 
     public Result redirectToIndex(){
@@ -94,6 +124,10 @@ public class PacificaController extends Controller {
     public Result alt() {
         return ok(views.html.pacifica.render());
     }
+
+    public Result robots() { return ok(views.txt.robots.render()); }
+
+    public Result sitemap() { return ok(views.xml.sitemap.render("www.example.org")); }
 
     @AddCSRFToken
     public CompletionStage<Result> index() {
@@ -167,14 +201,39 @@ public class PacificaController extends Controller {
         return endDateTime.isBefore(now(clock));
     }
 
-      /**
-   * The WebSocket
-   */
-  /* public  play.mvc.WebSocket stream(String email) {
-        ActorRef rmc = actors.getRegionManagerClient();
-        return WebSocket.Text.accept( 
-            request -> 
-                ActorFlow.actorRef(out -> ClientConnection.props(email, out, rmc),actorSystem,materializer)
-        );    
-    } */
+    private boolean sameOriginCheck(Http.RequestHeader request) {
+        List<String> origins = request.getHeaders().getAll("Origin");
+        if (origins.size() > 1) {
+            // more than one origin found
+            return false;
+        }
+        String origin = origins.get(0);
+        return originMatches(origin);
+    }
+
+    private boolean originMatches(String origin) {
+        if (origin == null) return false;
+        try {
+            URI url = new URI(origin);
+            return url.getHost().equals("localhost")
+                    && (url.getPort() == 9000 || url.getPort() == 19001);
+        } catch (Exception e ) {
+            return false;
+        }
+    }
+
+    /**
+    * The WebSocket
+    */
+    public WebSocket stream(String email) {
+
+        return WebSocket.Text.acceptOrResult(request -> {
+            if (sameOriginCheck(request)) {
+                return CompletableFuture.completedFuture(F.Either.Right(userFlow));
+            } else {
+                return CompletableFuture.completedFuture(F.Either.Left(forbidden()));
+            }
+        });
+    }
+
 }

@@ -49,6 +49,7 @@ libraryDependencies += "org.webjars" % "rjs" % "2.1.11-1-trireme" % "test"
 libraryDependencies += "org.webjars" % "squirejs" % "0.1.0" % "test"
 libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.3"
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
+libraryDependencies += "org.webjars.npm" % "three" % "0.169.0"
 
 
 testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")

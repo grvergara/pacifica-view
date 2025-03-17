@@ -25,16 +25,13 @@ GET    /pdf/:id/delete             controllers.PDFController.deletePDF(id: Long)
 GET     /health                  controllers.HealthController.checkHealth()
 GET     /health/db              controllers.HealthController.checkDatabaseConnection()
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset) 
-
 # Login Routes
 GET     /login                      controllers.LoginController.showLoginForm()
 POST    /login                      controllers.LoginController.login(request: Request)
 GET     /logout                     controllers.LoginController.logout(request: Request)
 
 # The websocket
-# GET        /stream/:email       controllers.PacificaController.stream(email)
+GET        /stream/:email       controllers.PacificaController.stream(email)
 
 # Xat Routes
 # This file defines all application routes (Higher priority routes first)
@@ -44,4 +41,21 @@ GET     /logout                     controllers.LoginController.logout(request: 
 GET     /xat                         controllers.XatController.index(request: Request)
 GET     /xat/c                       controllers.XatController.chat
 
+#TODO: implement this websocket
+#GET     /monitor              controllers.MonitorController.monitor
+
+# Stock Routes
+# ~~~~
+
+GET     /stock                           controllers.HomeController.index(request :Request)
+GET     /stock/ws                         controllers.HomeController.ws
+GET     /stock/sentiment/:symbol          controllers.StockSentiment.get(symbol)
+
+## Webjar libraries
 ->      /webjars                    webjars.Routes
+
+## Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /robots.txt                  controllers.PacificaController.robots()
+GET     /sitemap.xml                  controllers.PacificaController.sitemap()
