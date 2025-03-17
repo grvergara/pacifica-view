@@ -10,8 +10,11 @@ POST   /donate                     controllers.CharityController.donate()
 GET    /closed                     controllers.ClosedController.index()
 GET    /donation-count             controllers.CharityController.donateCount()
 
-GET    /monitor                   controllers.PacificaController.monitor()
-GET    /                           controllers.PacificaController.index()
+GET     /                          controllers.PacificaController.landing()
+GET     /monitor                   controllers.PacificaController.monitor()
+GET     /dashboard                 controllers.PacificaController.index()
+# The websocket
+GET     /stream/:email             controllers.PacificaController.stream(email)
 
 GET    /pdf-list                   controllers.PDFController.pdfList()
 POST   /upload-pdf                 controllers.PDFController.uploadPDF(request: Request)
@@ -20,21 +23,18 @@ GET    /pdf/:id/download           controllers.PDFController.downloadPDF(id: Lon
 GET    /pdf/:id/delete             controllers.PDFController.deletePDF(id: Long)
 
 # Health Check Routes
-GET     /health                  controllers.HealthController.checkHealth()
-GET     /health/db              controllers.HealthController.checkDatabaseConnection()
+GET     /health                    controllers.HealthController.checkHealth()
+GET     /health/db                 controllers.HealthController.checkDatabaseConnection()
 
 # Login Routes
-GET     /login                      controllers.LoginController.showLoginForm()
-POST    /login                      controllers.LoginController.login(request: Request)
-GET     /logout                     controllers.LoginController.logout(request: Request)
+GET     /login                     controllers.LoginController.showLoginForm()
+POST    /login                     controllers.LoginController.login(request: Request)
+GET     /logout                    controllers.LoginController.logout(request: Request)
 
-# The websocket
-GET     /stream/:email       controllers.PacificaController.stream(email)
 
 # Xat Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
 # An example controller showing a sample home page
 GET     /xat                         controllers.XatController.index(request: Request)
 GET     /xat/c                       controllers.XatController.chat

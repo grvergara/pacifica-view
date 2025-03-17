@@ -1,24 +1,44 @@
+@(webJarsUtil: org.webjars.play.WebJarsUtil)
 
-@alt("::Pacifica::", "homepage", "2025") {
-    <div class="landing">
-        <div class="item item1">
-            <span>
-            @if(request.session().get("username") != null ) {
-                <span class="welcome">Welcome, @request.session().get("username")</span>
-                <a href="@routes.LoginController.logout()" class="logout-btn">Logout</a>
-            } else {
-                <a href="@routes.LoginController.showLoginForm()" class="login-btn">Login</a>
-            }
-            </span>
-        </div>
-        <div class="item item2">
-            <span><a href="@routes.HealthController.checkDatabaseConnection()">Check Database Health</a></span>
-        </div>
-        <div class="item item3">
-            @request.flash.data.map{ case (k, v) =>
-                <li><span>@k</span>:<span>@v</span></li>
-            }
-        </div>
 
-    </div>
-}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <title>:: Pacifica ::</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/pacifica.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("i/favicon.png")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")"/>
+        @webJarsUtil.locate("bootstrap.min.css").css()
+
+    </head>
+    <body class="">
+        <div class="container py-5 text-center bg-light rounded-3">
+            <h1 class="display-4">Welcome!</h1>
+            <p class="lead">This is a custom hero section.</p>
+        </div>
+            <!-- Jumbotron Section -->
+        <section class="video-jumbotron">
+                <!-- Video Background -->
+            <video class="video-bg" autoplay muted loop>
+                <source src="@routes.Assets.versioned("media/shippings.mp4")" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+                <!-- Dark Overlay -->
+            <div class="video-overlay"></div>
+                <!-- Jumbotron Content -->
+            <div class="video-content container">
+                <h1 class="display-4 fw-bold">Welcome to [Pacifica]</h1>
+                <p class="lead">Create an account today and enjoy seamless shipping solutions tailored to your needs!</p>
+                <a href="@routes.PacificaController.index()" class="btn btn-primary btn-custom">Enter Site</a>
+            </div>
+        </section>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")"/>
+        <script src="@routes.Assets.versioned("lib/jquery/jquery.js")"></script>
+        @webJarsUtil.locate("umd/popper.js").script()
+        @webJarsUtil.locate("bootstrap.js").script()
+
+    </body>
+</html>

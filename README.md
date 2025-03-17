@@ -127,3 +127,11 @@ UPDATE this README
 Make a ROADMAP
 Replace KnockoutJS with EmberJs.
 
+                        <li class="nav-item">
+                        @if(request.session().get("username") != null ) {
+                            <span class="welcome">Welcome, @request.session().get("username")</span>
+                            <a href="@routes.LoginController.logout()" class="logout-btn">Logout</a>
+                        } else {
+                            <a id="hello-btn" class="login-btn" href="@routes.LoginController.showLoginForm()">Sign-In</a>
+                        }
+                        </li>

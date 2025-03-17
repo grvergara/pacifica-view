@@ -1,5 +1,6 @@
-@(count: Long)
+@(count: Long, webJarsUtil: org.webjars.play.WebJarsUtil)
 
-@main("Foo Page","Main") {
-<p>@count</p>
+@main("Foo Page","Main", webJarsUtil) {
+
+    <span class="jumbotron-fluid">@count</span>
 }

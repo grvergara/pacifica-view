@@ -9,6 +9,7 @@ import akka.stream.javadsl.*;
 import com.typesafe.config.Config;
 import models.Charity;
 import modules.CounterModule;
+import org.webjars.play.WebJarsUtil;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.FormFactory;
@@ -75,6 +76,7 @@ public class PacificaController extends Controller {
     private final Materializer materializer;
     private final Flow<String, String, NotUsed> userFlow;
     private final Counter counter;
+    private final WebJarsUtil webJarsUtil;
 
     @Inject
     public PacificaController(CharityRepository charityRepository,
@@ -86,7 +88,8 @@ public class PacificaController extends Controller {
                               Materializer mat,
                              //Actors actors,
                              Materializer materializer,
-                              Counter counter) {
+                              Counter counter,
+                              WebJarsUtil webJarsUtil) {
         org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
         LoggingAdapter logging = Logging.getLogger(actorSystem.eventStream(), logger.getName());
 
@@ -113,6 +116,8 @@ public class PacificaController extends Controller {
         Source<String, NotUsed> chatSource = sinkSourcePair.second();
         this.userFlow = Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow", logging);
         this.counter = counter;
+        this.webJarsUtil = webJarsUtil;
+
 
     }
 
@@ -130,12 +135,16 @@ public class PacificaController extends Controller {
     public Result sitemap() { return ok(views.xml.sitemap.render("www.example.org")); }
 
     @AddCSRFToken
+    public Result landing() {
+        return ok(views.html.landing.render(webJarsUtil)); }
+
+    @AddCSRFToken
     public Result index() {
         //System.out.println("endDateTime: " + this.endDateTime);
         //return charityRepository.findList().thenApplyAsync(items ->
         //        timeSensitiveResult(() -> voteIndex.render(items)), ec.current());
         Long count = counter.getNextValue();
-        return ok(views.html.foo.render(count));
+        return ok(views.html.foo.render(count, webJarsUtil));
     }
 
     @RequireCSRFCheck

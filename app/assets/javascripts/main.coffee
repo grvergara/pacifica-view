@@ -11,16 +11,11 @@ require.config {
     mockGps: "./services/mockGps"
     storage: "./services/storage"
     md5: "./md5.min"
-    bootstrap: "../lib/bootstrap/js/bootstrap"
     jquery: "../lib/jquery/jquery"
     knockout: "../lib/knockout/knockout"
     leaflet: "../lib/leaflet/leaflet"
   }
   shim: {
-    bootstrap: {
-      deps: ["jquery"],
-      exports: "$"
-    }
     jquery: {
       exports: "$"
     }
@@ -30,7 +25,7 @@ require.config {
   }
 }
 
-require ["knockout", "mainPage", "bootstrap"], (ko, MainPageModel) ->
+require ["knockout", "mainPage"], (ko, MainPageModel) ->
 
   model = new MainPageModel
   ko.applyBindings(model)

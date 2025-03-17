@@ -41,7 +41,6 @@ libraryDependencies += "de.grundid.opendatalab" % "geojson-jackson" % "1.1"
 
 libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
 libraryDependencies += "org.webjars" % "jquery" % "3.7.1"
-libraryDependencies += "org.webjars" % "bootstrap" % "3.4.1"
 libraryDependencies += "org.webjars" % "leaflet" % "1.7.1"
 libraryDependencies += "org.webjars" % "knockout" % "2.3.0"
 libraryDependencies += "org.webjars" % "requirejs" % "2.1.11-1"
@@ -50,7 +49,8 @@ libraryDependencies += "org.webjars" % "squirejs" % "0.1.0" % "test"
 libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.3"
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars.npm" % "three" % "0.169.0"
-
+libraryDependencies += "org.webjars" % "bootstrap" % "5.3.3"
+libraryDependencies += "org.webjars" % "popper.js" % "2.11.7"
 
 testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
 
