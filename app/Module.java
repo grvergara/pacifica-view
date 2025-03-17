@@ -1,3 +1,5 @@
+import actors.StocksActor;
+import actors.UserActor;
 import actors.UserParentActor;
 import com.google.inject.AbstractModule;
 import play.libs.akka.AkkaGuiceSupport;
@@ -11,6 +13,9 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
     @Override
     protected void configure() {
         bind(Clock.class).toInstance(systemUTC());
-        bindActor(UserParentActor.class, "userParentActor"); //Important!! To implement DI
+        //Important!! To implement DI
+        bindActor(UserParentActor.class, "userParentActor");
+        bindActor(StocksActor.class, "stocksActor");
+        bindActorFactory(UserActor.class, UserActor.Factory.class);
     }
 }
